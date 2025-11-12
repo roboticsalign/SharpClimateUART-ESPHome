@@ -9,11 +9,13 @@ Kopieren Sie den Inhalt von `buderus-buero.yaml` in die ESPHome Web-Oberfläche 
 **UART-Parameter:**
 - Baudrate: 9600
 - Parity: EVEN
-- Stop Bits: 2
+- Stop Bits: 1 (Standard - NICHT 2!)
+
+**WICHTIG:** `stop_bits: 2` verursacht falsche Byte-Interpretation!
 
 **Code-Version:**
-- Commit: c44a179
-- Timeout: 30 Sekunden (statt 10s)
+- Standard Sharp HVAC Protocol (erfolgreich getestet im Original-Repo)
+- Timeout: 30 Sekunden
 - Init-Retry-Delay: 5 Sekunden
 
 ## Erfolgs-Kriterium
@@ -47,10 +49,9 @@ Connected
 
 ## Technische Details
 
-Diese Konfiguration basiert auf Tests, die ergaben:
-- 9600 Baud funktioniert besser als 4800
-- EVEN Parity ist korrekt
-- 2 Stop Bits sind notwendig (1 Stop Bit schlägt bei 2/8 fehl)
-- Längere Timeouts notwendig, da AC langsam antwortet
+Diese Konfiguration entspricht der erfolgreich getesteten Referenz (Original-Repo):
+- 9600 Baud
+- EVEN Parity
+- 1 Stop Bit (Standard - kein stop_bits Parameter!)
 
-Mit dieser Konfiguration wurde 4/8 erreicht. Die verlängerten Timeouts sollten ausreichen, um 8/8 zu erreichen.
+**Problem mit 2 Stop Bits:** Bytes werden falsch gelesen (0x02 → 0x06 ACK), Verbindung kommt nicht zustande.

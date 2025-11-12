@@ -46,7 +46,6 @@ uart:
   rx_pin: 3
   baud_rate: 9600
   parity: EVEN
-  stop_bits: 2
 
 button:
   - platform: restart
