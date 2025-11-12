@@ -101,9 +101,11 @@ namespace esphome
       unsigned long connectionStart = 0;
       unsigned long previousMillis = 0;
       unsigned long lastRequestTime = 0;
+      unsigned long lastInitAttempt = 0;
       bool awaitingResponse = false;
       const long interval = 60000;
-      const long responseTimeout = 10000; // 10 seconds
+      const long responseTimeout = 15000; // 15 seconds (increased from 10)
+      const long initRetryDelay = 2000; // 2 seconds between init attempts
       float currentTemperature = 0.0f;
     };
   }

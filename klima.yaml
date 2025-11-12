@@ -26,8 +26,9 @@ logger:
 uart:
    tx_pin: 1         # hardware dependant
    rx_pin: 3         # hardware dependant
-   baud_rate: 9600
-   parity: EVEN
+   baud_rate: 4800
+   parity: NONE
+   stop_bits: 1
 
 climate:
   - platform: sharp_ac     

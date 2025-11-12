@@ -30,11 +30,18 @@ namespace esphome
         return;
       }
 
-      if (this->connectionStart == 0) {
-        hardware->log_debug(TAG, "Initializing connection...");
-        this->connectionStart = hardware->get_millis();
+      // Add delay between init attempts to avoid overwhelming the AC unit
+      unsigned long currentMillis = hardware->get_millis();
+      if (lastInitAttempt > 0 && (currentMillis - lastInitAttempt < initRetryDelay)) {
+        return; // Wait before retrying
       }
 
+      if (this->connectionStart == 0) {
+        hardware->log_debug(TAG, "Initializing connection...");
+        this->connectionStart = currentMillis;
+      }
+
+      lastInitAttempt = currentMillis;
       SharpFrame frame(init_msg, sizeof(init_msg) + 1);
       this->write_frame(frame);
     }
@@ -124,7 +131,7 @@ namespace esphome
 
       if (hardware->available() < 8)
       {
-        if (this->errCounter < 5)
+        if (this->errCounter < 10)  // Increased from 5 to 10 - wait longer for complete frame
         {
           this->errCounter++;
           return SharpFrame(msg, 0);
@@ -134,9 +141,9 @@ namespace esphome
           this->errCounter = 0;
           uint8_t singleByte = hardware->read();
           SharpFrame frame(singleByte);
-          
+
           hardware->log_debug(TAG, "RX: %s (error recovery)", hardware->format_hex_pretty(&singleByte, 1).c_str());
-          
+
           return frame;
         }
       }
@@ -388,7 +395,8 @@ namespace esphome
       this->status = 0;
       this->awaitingResponse = false;
       this->connectionStart = 0;
-      
+      this->lastInitAttempt = 0;
+
       if (callback) {
         callback->on_connection_status_update(0);
       }
