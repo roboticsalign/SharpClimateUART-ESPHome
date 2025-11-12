@@ -1,0 +1,73 @@
+# ===============================================
+# TEST 3: 9600 Baud, NONE Parity
+# ===============================================
+# Kopieren Sie diesen kompletten Text in die ESPHome Web-Oberfläche
+
+substitutions:
+  nr: "2"
+  devicename: esphome-buderus-buero
+  deviceid: hvac${nr}
+
+esphome:
+  name: ${devicename}
+  friendly_name: ${devicename}
+
+esp32:
+  board: esp32-c3-devkitm-1
+  variant: ESP32C3
+  framework:
+    type: arduino
+
+external_components:
+  - source: github://roboticsalign/SharpClimateUART-ESPHome@fa69c94
+    components: [sharp_ac]
+    refresh: 60s
+
+api:
+  encryption:
+    key: !secret api_key
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+logger:
+  baud_rate: 0
+  level: DEBUG
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  domain: ".iot.int.dauer.de"
+
+captive_portal:
+
+web_server:
+  port: 80
+  version: 3
+
+uart:
+  tx_pin: 1
+  rx_pin: 3
+  baud_rate: 9600
+  parity: NONE
+  stop_bits: 1
+
+button:
+  - platform: restart
+    name: "EG Buero Restart"
+
+climate:
+  - platform: sharp_ac
+    id: ${deviceid}
+    name: "EG Buero Klimaanlage"
+    horizontal_vane_select:
+      name: "EG Buero Horizontal Vane"
+    vertical_vane_select:
+      name: "EG Buero Vertikal Vane"
+    ion_switch:
+      name: "EG Buero Plasmacluster"
+    connection_status:
+      name: "EG Buero AC Connection Status"
+    reconnect_button:
+      name: "EG Buero AC Reconnect"
