@@ -1,3 +1,5 @@
+# TEST CONFIG 2: 9600 Baud, EVEN Parity, 1 Stop Bit
+# Dies war Ihre ursprüngliche Konfiguration
 substitutions:
   nr: "2"
   devicename: esphome-buderus-buero
@@ -13,8 +15,6 @@ esp32:
   framework:
     type: arduino
 
-# Direkte GitHub-Referenz auf COMMIT statt Branch (umgeht Cache!)
-# Commit fa69c94 enthält alle Timing-Verbesserungen
 external_components:
   - source: github://roboticsalign/SharpClimateUART-ESPHome@fa69c94
     components: [sharp_ac]
@@ -43,12 +43,11 @@ web_server:
   port: 80
   version: 3
 
-# UART Konfiguration - TESTEN SIE VERSCHIEDENE KOMBINATIONEN!
-# Aktuell: 4800 Baud, EVEN Parity (häufigste Kombi für HVAC)
+# CONFIG 2: 9600 Baud, EVEN Parity
 uart:
   tx_pin: 1
   rx_pin: 3
-  baud_rate: 4800
+  baud_rate: 9600
   parity: EVEN
   stop_bits: 1
 

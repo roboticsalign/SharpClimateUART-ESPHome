@@ -1,6 +1,65 @@
-# Buderus Logacool AC186i Setup - Einfache Anleitung
+# Buderus Logacool AC186i Setup - WICHTIGE HINWEISE
 
-## Schnellstart
+## ⚠️ CACHE-PROBLEM ERKANNT!
+
+Ihre Logs zeigen **"Timeout - no response for 10s"**, aber die verbesserte Version sollte **"Timeout - no response for 15s"** anzeigen.
+
+**Das bedeutet**: ESPHome lädt eine gecachte alte Version!
+
+## Lösung: Systematisches Testen
+
+Die Hardware hat früher funktioniert → Das Problem ist die **UART-Konfiguration**.
+
+Ich habe **3 Test-Konfigurationen** mit verschiedenen UART-Parametern erstellt.
+
+**Siehe `test-configs/README.md` für detaillierte Anleitung!**
+
+---
+
+## Schnellstart: Testen Sie diese Kombinationen
+
+### **TEST 1: 4800 Baud, EVEN Parity** ⭐ EMPFOHLEN
+```bash
+esphome run test-configs/config-1-4800-even.yaml
+```
+
+### **TEST 2: 9600 Baud, EVEN Parity**
+```bash
+esphome run test-configs/config-2-9600-even.yaml
+```
+
+### **TEST 3: 9600 Baud, NONE Parity**
+```bash
+esphome run test-configs/config-3-9600-none.yaml
+```
+
+---
+
+## Erfolgsanzeichen in den Logs
+
+**✅ Code geladen**:
+```
+Timeout - no response for 15s  ← MUSS 15s sein, nicht 10s!
+```
+
+**✅ Verbindung funktioniert**:
+```
+Connecting (1/8)...
+Connecting (2/8)...
+...
+Connected
+```
+
+**❌ Falsche UART-Parameter**:
+```
+RX: FF (error recovery)
+RX: E0 (error recovery)
+```
+→ Nächste Config testen!
+
+---
+
+## Alte Anleitung (nur zur Info)
 
 Diese Version enthält alle Timing-Verbesserungen und verwendet automatisch die neueste Version vom GitHub.
 
