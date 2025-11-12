@@ -1,0 +1,68 @@
+# ============================================
+# Buderus AC Configuration - Office (Büro)
+# ============================================
+# This is a modular configuration using the base package
+
+substitutions:
+  # Device Identification
+  nr: "2"
+  devicename: esphome-buderus-buero
+  deviceid: hvac${nr}
+
+  # AC Configuration
+  ac_name: "EG Buero Klimaanlage"
+
+  # UART Pin Configuration (ESP32-C3 specific)
+  uart_tx_pin: "1"
+  uart_rx_pin: "3"
+
+  # UART Parameters (Buderus AC186i optimized)
+  uart_baud: "4800"
+  uart_parity: "NONE"
+  uart_stop_bits: "1"
+
+  # Logging
+  log_level: "DEBUG"
+
+esphome:
+  name: ${devicename}
+  friendly_name: ${devicename}
+
+esp32:
+  board: esp32-c3-devkitm-1
+  variant: ESP32C3
+  framework:
+    type: arduino
+
+# Import the base package with all AC-related configuration
+packages:
+  buderus_ac: !include packages/buderus_ac186i_base.yaml
+
+# API Configuration
+api:
+  encryption:
+    key: !secret api_key
+
+# OTA Updates
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+# WiFi Configuration
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  domain: ".iot.int.dauer.de"
+
+# Captive Portal for WiFi setup
+captive_portal:
+
+# Web Server
+web_server:
+  port: 80
+  version: 3
+
+# Restart Button
+button:
+  - platform: restart
+    name: "EG Buero Restart"
