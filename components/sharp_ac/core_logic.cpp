@@ -410,7 +410,7 @@ namespace esphome
 
       unsigned long currentMillis = hardware->get_millis();
       if (currentMillis - lastRequestTime >= responseTimeout) {
-        hardware->log_debug(TAG, "Timeout - no response for 10s, reconnecting...");
+        hardware->log_debug(TAG, "Timeout - no response for 30s, reconnecting...");
         resetConnection();
       }
     }
