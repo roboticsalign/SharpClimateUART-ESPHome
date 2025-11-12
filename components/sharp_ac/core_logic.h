@@ -104,8 +104,8 @@ namespace esphome
       unsigned long lastInitAttempt = 0;
       bool awaitingResponse = false;
       const long interval = 60000;
-      const long responseTimeout = 15000; // 15 seconds (increased from 10)
-      const long initRetryDelay = 2000; // 2 seconds between init attempts
+      const long responseTimeout = 30000; // 30 seconds - enough time for AC to respond
+      const long initRetryDelay = 5000; // 5 seconds between init attempts - AC needs time
       float currentTemperature = 0.0f;
     };
   }
