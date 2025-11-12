@@ -9,10 +9,11 @@ Diese Version enthält alle Timing-Verbesserungen und verwendet automatisch die 
 Benutzen Sie: **`buderus-buero.yaml`**
 
 Diese Datei:
-- ✅ Lädt automatisch die verbesserte Version von GitHub
+- ✅ Lädt automatisch die verbesserte Version von GitHub (roboticsalign/SharpClimateUART-ESPHome)
 - ✅ Enthält alle Timing-Verbesserungen (15s timeout, 2s init delay, etc.)
 - ✅ UART korrekt konfiguriert (4800 Baud, NONE Parity)
 - ✅ Keine lokalen Abhängigkeiten
+- ✅ Verweist auf den richtigen Fork mit allen Bugfixes
 
 ## 2. Secrets-Datei anlegen
 
@@ -149,10 +150,13 @@ Diese Version enthält:
 - Error-Counter: 10 Versuche (statt 5)
 - Alle Timing-Verbesserungen aus commit fa69c94 und eb126b2
 
+Repository: `roboticsalign/SharpClimateUART-ESPHome` (Fork von sven819)
 Branch: `claude/analyze-buderus-logacool-errors-011CV3yzwjNQyuorfWsCc6hW`
 
-**HINWEIS**: Nach Merge in `main` Branch, ändern Sie in `buderus-buero.yaml`:
+**HINWEIS**: Nach Pull Request zum Original-Repository (sven819), ändern Sie in `buderus-buero.yaml`:
 ```yaml
 external_components:
   - source: github://sven819/SharpClimateUART-ESPHome@main
 ```
+
+**AKTUELL**: Die YAML verweist auf den roboticsalign-Fork mit allen Timing-Verbesserungen!

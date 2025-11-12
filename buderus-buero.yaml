@@ -14,8 +14,9 @@ esp32:
     type: arduino
 
 # Direkte GitHub-Referenz mit allen Verbesserungen
+# WICHTIG: Verweist auf roboticsalign Fork, nicht sven819 Original!
 external_components:
-  - source: github://sven819/SharpClimateUART-ESPHome@claude/analyze-buderus-logacool-errors-011CV3yzwjNQyuorfWsCc6hW
+  - source: github://roboticsalign/SharpClimateUART-ESPHome@claude/analyze-buderus-logacool-errors-011CV3yzwjNQyuorfWsCc6hW
     components: [sharp_ac]
     refresh: always
 
